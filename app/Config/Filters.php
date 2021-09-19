@@ -19,6 +19,7 @@ class Filters extends BaseConfig
         'csrf'     => CSRF::class,
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
+        'localize' => \App\Filters\Localize::class,
     ];
 
     /**
@@ -31,6 +32,7 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
+            'localize',
         ],
         'after' => [
             'toolbar',
