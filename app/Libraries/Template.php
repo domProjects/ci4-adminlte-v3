@@ -20,6 +20,9 @@ class Template
 	public $sidebarMenuClass = [];
 
 	//
+	public $brand = [];
+
+	//
 	public $output = null;
 
 	//
@@ -122,6 +125,55 @@ class Template
 	public function addSidebarMenuClass()
 	{
 		return $this->_addOptionsClass($this->sidebarMenuClass);
+	}
+
+	//
+	public function addSidebarMenuBrand()
+	{
+		$this->output  = '<a href="' . site_url() . '" class="brand-link">';
+		$this->output .= '<img src="' . base_url($this->config->brand['img']) . '" alt="' . $this->config->brand['alt'] . '" class="brand-image img-circle elevation-3" style="opacity: .8">';
+		$this->output .= '<span class="brand-text font-weight-light">' . $this->config->brand['text'] . '</span>';
+		$this->output .= '</a>';
+
+		return $this->output;
+	}
+
+	//
+	public function addSidebarUserPanel()
+	{
+		if ($this->config->sidebarUserPanel !== false)
+		{
+			$this->output  = '<div class="user-panel mt-3 pb-3 mb-3 d-flex">';
+			$this->output .= '<div class="image">';
+			$this->output .= '<img src="' . base_url('img/avatar/user2-160x160.jpg') . '" class="img-circle elevation-2" alt="User Image">';
+			$this->output .= '</div>';
+			$this->output .= '<div class="info">';
+			$this->output .= '<a href="#" class="d-block">Alexander Pierce</a>';
+			$this->output .= '</div>';
+			$this->output .= '</div>';
+
+			return $this->output;
+		}
+	}
+
+	//
+	public function addSidebarSearchForm()
+	{
+		if ($this->config->sidebarSearchForm !== false)
+		{
+			$this->output  = '<div class="form-inline">';
+			$this->output .= '<div class="input-group" data-widget="sidebar-search">';
+			$this->output .= '<input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">';
+			$this->output .= '<div class="input-group-append">';
+			$this->output .= '<button class="btn btn-sidebar">';
+			$this->output .= '<i class="fas fa-search fa-fw"></i>';
+			$this->output .= '</button>';
+			$this->output .= '</div>';
+			$this->output .= '</div>';
+			$this->output .= '</div>';
+
+			return $this->output;
+		}
 	}
 
 	//

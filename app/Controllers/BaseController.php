@@ -68,9 +68,6 @@ class BaseController extends Controller
 		$this->configApp = config('App');
 		$this->configTpl = config('AppTpl');
 
-		// load helper
-		helper('template');
-
 		// Define language
 		$this->data['locale'] = $request->getLocale();
 		$this->data['supportedLocales'] = $request->config->supportedLocales;
@@ -100,6 +97,15 @@ class BaseController extends Controller
 
 		// Add class in <ul> .nav-sidebar
 		$this->data['sidebarMenuClass'] = $template->addSidebarMenuClass();
+
+		// Add brand elements
+		$this->data['brand'] = $template->addSidebarMenuBrand();
+
+		// Add brand elements
+		$this->data['sidebarUserPanel'] = $template->addSidebarUserPanel();
+
+		// Add brand elements
+		$this->data['sidebarSearchForm'] = $template->addSidebarSearchForm();
 
 		// Merge data[]
 		$data = $this->data;
