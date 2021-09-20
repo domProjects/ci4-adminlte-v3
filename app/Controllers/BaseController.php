@@ -9,6 +9,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use App\Libraries\Template;
+
 /**
  * Class BaseController
  *
@@ -75,7 +77,7 @@ class BaseController extends Controller
 
 		// \Config\App
 		$this->data['charset'] = $this->configApp->charset;
-		$this->data['lang'] = $this->configApp->charset;
+		$this->data['lang'] = $request->getLocale();
 	}
 
 	/**
@@ -85,53 +87,19 @@ class BaseController extends Controller
 	 */
 	protected function _render(string $view)
 	{
-		// \Config\App
-		$this->data['charset'] = $this->configApp->charset;
+		$template = new Template();
 
 		// Add class in <body>
-		$headerFixed = ($this->configTpl->headerFixed !== false) ? $this->configTpl->headerFixedClass : null;
-		$sidebarCollapsed = ($this->configTpl->sidebarCollapsed !== false) ? $this->configTpl->sidebarCollapsedClass : null;
-		$sidebarFixed = ($this->configTpl->sidebarFixed !== false) ? $this->configTpl->sidebarFixedClass : null;
-		$sidebarMini = ($this->configTpl->sidebarMini !== false) ? $this->configTpl->sidebarMiniClass : null;
-		$sidebarMiniMd = ($this->configTpl->sidebarMiniMd !== false) ? $this->configTpl->sidebarMiniMdClass : null;
-		$sidebarMiniXs = ($this->configTpl->sidebarMiniXs !== false) ? $this->configTpl->sidebarMiniXsClass : null;
-		$footerFixed = ($this->configTpl->footerFixed !== false) ? $this->configTpl->footerFixedClass : null;
-
-		$bodyClassArray = [$headerFixed, $sidebarCollapsed, $sidebarFixed, $sidebarMini, $sidebarMiniMd, $sidebarMiniXs, $footerFixed];
-		$bodyClassResult = addOptionsClass($bodyClassArray);
-
+		$this->data['bodyClass'] = $template->addBodyClass();
 
 		// Add class in <nav> .main-header
-		$headerDopdownOffset = ($this->configTpl->headerDopdownOffset !== false) ? $this->configTpl->headerDopdownOffsetClass : null;
-		$headerBorder = ($this->configTpl->headerBorder !== false) ? $this->configTpl->headerBorderClass : null;
-
-		$navbarClassArray = [$headerDopdownOffset, $headerBorder];
-		$navbarClassResult = addOptionsClass($navbarClassArray);
-
+		$this->data['navbarClass'] = $template->addNavbarClass();
 
 		// Add class in <aside> .main-sidebar
-		$sidebarNoExpand = ($this->configTpl->sidebarNoExpand !== false) ? $this->configTpl->sidebarNoExpandClass : null;
-
-		$asideNavbarClassArray = [$sidebarNoExpand];
-		$asideNavbarClassResult = addOptionsClass($asideNavbarClassArray);
-
+		$this->data['asideNavbarClass'] = $template->addAsideNavbarClass();
 
 		// Add class in <ul> .nav-sidebar
-		$sidebarFlatStyle = ($this->configTpl->sidebarFlatStyle !== false) ? $this->configTpl->sidebarFlatStyleClass : null;
-		$sidebarLegacyStyle = ($this->configTpl->sidebarLegacyStyle !== false) ? $this->configTpl->sidebarLegacyStyleClass : null;
-		$sidebarCompact = ($this->configTpl->sidebarCompact !== false) ? $this->configTpl->sidebarCompactClass : null;
-		$sidebarChildIndent = ($this->configTpl->sidebarChildIndent !== false) ? $this->configTpl->sidebarChildIndentClass : null;
-		$sidebarChildHideCollapse = ($this->configTpl->sidebarChildHideCollapse !== false) ? $this->configTpl->sidebarChildHideCollapseClass : null;
-
-		$sidebarMenuClassArray = [$sidebarFlatStyle, $sidebarLegacyStyle, $sidebarCompact, $sidebarChildIndent, $sidebarChildHideCollapse];
-		$sidebarMenuClassResult = addOptionsClass($sidebarMenuClassArray);
-
-
-		// Prepare data
-		$this->data['bodyClass'] = $bodyClassResult;
-		$this->data['navbarClass'] = $navbarClassResult;
-		$this->data['asideNavbarClass'] = $asideNavbarClassResult;
-		$this->data['sidebarMenuClass'] = $sidebarMenuClassResult;
+		$this->data['sidebarMenuClass'] = $template->addSidebarMenuClass();
 
 		// Merge data[]
 		$data = $this->data;

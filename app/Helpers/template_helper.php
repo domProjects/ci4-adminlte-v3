@@ -2,9 +2,26 @@
 
 // ------------------------------------------------------------------------
 
+if ( ! function_exists('xxxxx'))
+{
+	function xxxxx(bool $element, string $class)
+	{
+		if (is_bool($element) && $element !== false)
+		{
+			return $class;
+		}
+		else
+		{
+			return null;
+		}
+	}
+}
+
+// ------------------------------------------------------------------------
+
 if ( ! function_exists('addOptionsClass'))
 {
-	function addOptionsClass($elements = [], $separator = ' ')
+	function addOptionsClass(array $elements, string $separator = ' ')
 	{
 		if (is_array($elements))
 		{
