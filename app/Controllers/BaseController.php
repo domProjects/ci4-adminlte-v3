@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use App\Libraries\Template;
+use App\Libraries\Menu;
 
 /**
  * Class BaseController
@@ -28,6 +29,7 @@ class BaseController extends Controller
 	 */
 	protected $configApp;
 	protected $configTpl;
+	protected $configMenu;
 
 	/**
 	 * Instance of the main Request object.
@@ -67,6 +69,7 @@ class BaseController extends Controller
 		// Import config file
 		$this->configApp = config('App');
 		$this->configTpl = config('AppTpl');
+		$this->configMenu = config('AppMenu');
 
 		// Define language
 		$this->data['locale'] = $request->getLocale();
@@ -75,6 +78,11 @@ class BaseController extends Controller
 		// \Config\App
 		$this->data['charset'] = $this->configApp->charset;
 		$this->data['lang'] = $request->getLocale();
+
+		// Add menu
+		$menu = new Menu();
+		$this->data['menu'] = $menu->generate();
+
 	}
 
 	/**

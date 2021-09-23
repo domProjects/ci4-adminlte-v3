@@ -41,6 +41,10 @@ $routes->post('{locale}/setting/update', 'Setting::update');
 $routes->get('{locale}/user', 'User::index');
 $routes->get('{locale}/user/profile/(:num)', 'User::profile/$1');
 
+$routes->get('{locale}/test', 'Test::index');
+$routes->get('{locale}/test/one', 'Test::one');
+$routes->get('{locale}/test/two', 'Test::two');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
