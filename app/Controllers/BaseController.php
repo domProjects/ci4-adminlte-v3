@@ -63,6 +63,12 @@ class BaseController extends Controller
 
 	/**
 	 *
+	 * @var string
+	 */
+	protected $titlePage;
+
+	/**
+	 *
 	 */
 	protected $breadcrumb;
 
@@ -118,7 +124,7 @@ class BaseController extends Controller
 
 		// Add breadcrumb
 		$this->breadcrumb = new Breadcrumb();
-
+		// Add default items
 		$this->breadcrumbItems['root'] = ['Dashboard' => '/'];
 	}
 
@@ -157,16 +163,6 @@ class BaseController extends Controller
 	 */
 	protected function _render(string $view)
 	{
-		if ($this->configTemplate->breadcrumbHide !== true)
-		{
-			// Generate breadcrumb
-			$this->data['breadcrumb'] = $this->_renderBreadcrumb();
-		}
-		else
-		{
-			$this->data['breadcrumb'] = null;
-		}
-
 		// Add class in <body>
 		$this->data['bodyClass'] = $this->template->addBodyClass();
 
@@ -187,6 +183,12 @@ class BaseController extends Controller
 
 		// Add brand elements
 		$this->data['sidebarSearchForm'] = $this->template->addSidebarSearchForm();
+
+		// Add title page
+		$this->data['titlePage'] = $this->titlePage;
+
+		// Add breadcrumb elements
+		$this->data['breadcrumb'] = $this->configTemplate->breadcrumbHide !== true ? $this->_renderBreadcrumb() : null;
 
 		// Merge data[]
 		$data = $this->data;

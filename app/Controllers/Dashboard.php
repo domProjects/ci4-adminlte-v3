@@ -12,6 +12,10 @@ class Dashboard extends BaseController
 
 	public function index()
 	{
+		// Define title page
+		$this->titlePage = 'Dashboard';
+
+		// Renders this page
 		$this->_render('dashboard');
 	}
 }

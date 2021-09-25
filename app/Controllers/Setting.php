@@ -12,6 +12,10 @@ class Setting extends BaseController
 
 	public function index()
 	{
+		// Define title page
+		$this->titlePage = 'Setting';
+
+		// Renders this page
 		$this->_render('setting');
 	}
 }
