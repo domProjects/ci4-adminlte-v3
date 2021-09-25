@@ -64,7 +64,11 @@ class Autoload extends AutoloadConfig
      *
      * @var array<string, string>
      */
-    public $classmap = [];
+    public $classmap = [
+        'Breadcrumb' => APPPATH . '/Libraries/Breadcrumb.php',
+        'Menu'       => APPPATH . '/Libraries/Menu.php',
+        'Template'   => APPPATH . '/Libraries/Template.php',
+    ];
 
     /**
      * -------------------------------------------------------------------

@@ -158,7 +158,7 @@ class Menu
 		$uriCurrent = new \CodeIgniter\HTTP\URI(current_url());
 		$uriCurrent->setSilent(true);
 
-		$uriMenu    = new \CodeIgniter\HTTP\URI(site_url($url));
+		$uriMenu = new \CodeIgniter\HTTP\URI(site_url($url));
 		$uriMenu->setSilent(true);
 
 		$class = $this->template['menu_anchor_class_active'];
@@ -189,9 +189,9 @@ class Menu
 	protected function _isOpenItem(string $url)
 	{
 		$uriCurrent = new \CodeIgniter\HTTP\URI(current_url());
-		$uriMenu    = new \CodeIgniter\HTTP\URI(site_url($url));
-
 		$uriCurrent->setSilent(true);
+
+		$uriMenu = new \CodeIgniter\HTTP\URI(site_url($url));
 		$uriMenu->setSilent(true);
 
 		if (($uriMenu->getTotalSegments() == 2 && $uriMenu->getSegment(2) !== null) && ($uriMenu->getSegment(2) == $uriCurrent->getSegment(2)))

@@ -211,4 +211,13 @@ class AppTpl extends BaseConfig
 	 */
 	public $footerFixed = true;
 	public $footerFixedClass = 'layout-footer-fixed';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Breadcrumb
+	 * --------------------------------------------------------------------------
+	 *
+	 * @var bool
+	 */
+	public $breadcrumbHide = false;
 }

@@ -130,12 +130,12 @@ class Template
 	//
 	public function addSidebarMenuBrand()
 	{
-		$this->output  = '<a href="' . site_url() . '" class="brand-link">';
-		$this->output .= '<img src="' . base_url($this->config->brand['img']) . '" alt="' . $this->config->brand['alt'] . '" class="brand-image img-circle elevation-3" style="opacity: .8">';
-		$this->output .= '<span class="brand-text font-weight-light">' . $this->config->brand['text'] . '</span>';
-		$this->output .= '</a>';
+		$out  = '<a href="' . site_url() . '" class="brand-link">';
+		$out .= '<img src="' . base_url($this->config->brand['img']) . '" alt="' . $this->config->brand['alt'] . '" class="brand-image img-circle elevation-3" style="opacity: .8">';
+		$out .= '<span class="brand-text font-weight-light">' . $this->config->brand['text'] . '</span>';
+		$out .= '</a>';
 
-		return $this->output;
+		return $out;
 	}
 
 	//
@@ -143,16 +143,16 @@ class Template
 	{
 		if ($this->config->sidebarUserPanel !== false)
 		{
-			$this->output  = '<div class="user-panel mt-3 pb-3 mb-3 d-flex">';
-			$this->output .= '<div class="image">';
-			$this->output .= '<img src="' . base_url('img/avatar/user2-160x160.jpg') . '" class="img-circle elevation-2" alt="User Image">';
-			$this->output .= '</div>';
-			$this->output .= '<div class="info">';
-			$this->output .= '<a href="#" class="d-block">Alexander Pierce</a>';
-			$this->output .= '</div>';
-			$this->output .= '</div>';
+			$out  = '<div class="user-panel mt-3 pb-3 mb-3 d-flex">';
+			$out .= '<div class="image">';
+			$out .= '<img src="' . base_url('img/avatar/user2-160x160.jpg') . '" class="img-circle elevation-2" alt="User Image">';
+			$out .= '</div>';
+			$out .= '<div class="info">';
+			$out .= '<a href="#" class="d-block">Alexander Pierce</a>';
+			$out .= '</div>';
+			$out .= '</div>';
 
-			return $this->output;
+			return $out;
 		}
 	}
 

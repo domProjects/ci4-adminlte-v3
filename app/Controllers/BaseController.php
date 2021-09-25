@@ -9,8 +9,9 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-use App\Libraries\Template;
+use App\Libraries\Breadcrumb;
 use App\Libraries\Menu;
+use App\Libraries\Template;
 
 /**
  * Class BaseController
@@ -24,13 +25,6 @@ use App\Libraries\Menu;
  */
 class BaseController extends Controller
 {
-	/**
-	 * @var Config
-	 */
-	protected $configApp;
-	protected $configTpl;
-	protected $configMenu;
-
 	/**
 	 * Instance of the main Request object.
 	 *
@@ -46,6 +40,36 @@ class BaseController extends Controller
 	 * @var array
 	 */
 	protected $helpers = [];
+
+	/**
+	 *
+	 */
+	protected $configApp;
+
+	/**
+	 *
+	 */
+	protected $configTemplate;
+
+	/**
+	 *
+	 */
+	protected $configMenu;
+
+	/**
+	 *
+	 */
+	protected $menu;
+
+	/**
+	 *
+	 */
+	protected $breadcrumb;
+
+	/**
+	 *
+	 */
+	protected $template;
 
 	/**
 	 * Parameters for view components
@@ -68,7 +92,7 @@ class BaseController extends Controller
 
 		// Import config file
 		$this->configApp = config('App');
-		$this->configTpl = config('AppTpl');
+		$this->configTemplate = config('AppTemplate');
 		$this->configMenu = config('AppMenu');
 
 		// Define language
@@ -79,10 +103,15 @@ class BaseController extends Controller
 		$this->data['charset'] = $this->configApp->charset;
 		$this->data['lang'] = $request->getLocale();
 
-		// Add menu
-		$menu = new Menu();
-		$this->data['menu'] = $menu->generate();
+		// Add template
+		$this->template = new Template();
 
+		// Add menu
+		$this->menu = new Menu();
+		$this->data['menu'] = $this->menu->generate();
+
+		// Add breadcrumb
+		$this->breadcrumb = new Breadcrumb();
 	}
 
 	/**
@@ -92,28 +121,45 @@ class BaseController extends Controller
 	 */
 	protected function _render(string $view)
 	{
-		$template = new Template();
+		if ($this->configTemplate->breadcrumbHide !== true)
+		{
+			$breadcrumbItems = [
+				'Dashboard' => '/',
+				'Users' => 'users',
+				'Add' => 'users/add'
+			];
+
+			// Add items
+			$this->breadcrumb->add_item($breadcrumbItems);
+
+			// Generate breadcrumb
+			$this->data['breadcrumb'] = $this->breadcrumb->generate();
+		}
+		else
+		{
+			$this->data['breadcrumb'] = null;
+		}
 
 		// Add class in <body>
-		$this->data['bodyClass'] = $template->addBodyClass();
+		$this->data['bodyClass'] = $this->template->addBodyClass();
 
 		// Add class in <nav> .main-header
-		$this->data['navbarClass'] = $template->addNavbarClass();
+		$this->data['navbarClass'] = $this->template->addNavbarClass();
 
 		// Add class in <aside> .main-sidebar
-		$this->data['asideNavbarClass'] = $template->addAsideNavbarClass();
+		$this->data['asideNavbarClass'] = $this->template->addAsideNavbarClass();
 
 		// Add class in <ul> .nav-sidebar
-		$this->data['sidebarMenuClass'] = $template->addSidebarMenuClass();
+		$this->data['sidebarMenuClass'] = $this->template->addSidebarMenuClass();
 
 		// Add brand elements
-		$this->data['brand'] = $template->addSidebarMenuBrand();
+		$this->data['brand'] = $this->template->addSidebarMenuBrand();
 
 		// Add brand elements
-		$this->data['sidebarUserPanel'] = $template->addSidebarUserPanel();
+		$this->data['sidebarUserPanel'] = $this->template->addSidebarUserPanel();
 
 		// Add brand elements
-		$this->data['sidebarSearchForm'] = $template->addSidebarSearchForm();
+		$this->data['sidebarSearchForm'] = $this->template->addSidebarSearchForm();
 
 		// Merge data[]
 		$data = $this->data;
