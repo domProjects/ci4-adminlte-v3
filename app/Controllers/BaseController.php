@@ -68,6 +68,12 @@ class BaseController extends Controller
 
 	/**
 	 *
+	 * @var array
+	 */
+	protected $breadcrumbItems = [];
+
+	/**
+	 *
 	 */
 	protected $template;
 
@@ -112,6 +118,36 @@ class BaseController extends Controller
 
 		// Add breadcrumb
 		$this->breadcrumb = new Breadcrumb();
+
+		$this->breadcrumbItems['root'] = ['Dashboard' => '/'];
+	}
+
+	/**
+	 * Render Breadcrumb
+	 */
+	protected function _renderBreadcrumb()
+	{
+		if (isset($this->breadcrumbItems['controller'])  && is_array($this->breadcrumbItems['controller']))
+		{
+			if (isset($this->breadcrumbItems['function']) && is_array($this->breadcrumbItems['function']))
+			{
+				$breadcrumpFunction = $this->breadcrumbItems['function'];
+			}
+			else
+			{
+				$breadcrumpFunction = [];
+			}
+
+			// Merge breadcrumbItems
+			$mergeControllerFunction = array_merge($this->breadcrumbItems['controller'], $breadcrumpFunction);
+			$mergeRootControllerFunction = array_merge($this->breadcrumbItems['root'], $mergeControllerFunction);
+
+			// Add items
+			$this->breadcrumb->add_item($mergeRootControllerFunction);
+
+			// Generate breadcrumb
+			return $this->breadcrumb->generate();
+		}
 	}
 
 	/**
@@ -123,17 +159,8 @@ class BaseController extends Controller
 	{
 		if ($this->configTemplate->breadcrumbHide !== true)
 		{
-			$breadcrumbItems = [
-				'Dashboard' => '/',
-				'Users' => 'users',
-				'Add' => 'users/add'
-			];
-
-			// Add items
-			$this->breadcrumb->add_item($breadcrumbItems);
-
 			// Generate breadcrumb
-			$this->data['breadcrumb'] = $this->breadcrumb->generate();
+			$this->data['breadcrumb'] = $this->_renderBreadcrumb();
 		}
 		else
 		{

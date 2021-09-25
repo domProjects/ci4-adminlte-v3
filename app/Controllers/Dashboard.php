@@ -4,8 +4,14 @@ namespace App\Controllers;
 
 class Dashboard extends BaseController
 {
-    public function index()
-    {
-        $this->_render('dashboard');
-    }
+	public function __construct()
+	{
+		// Default Breadcrumb of this controller
+		$this->breadcrumbItems['controller'] = ['Dashboard' => '/'];
+	}
+
+	public function index()
+	{
+		$this->_render('dashboard');
+	}
 }
