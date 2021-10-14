@@ -54,7 +54,7 @@ class BaseController extends Controller
 	/**
 	 *
 	 */
-	protected $configMenu;
+	//protected $configMenu;
 
 	/**
 	 *
@@ -105,7 +105,7 @@ class BaseController extends Controller
 		// Import config file
 		$this->configApp = config('App');
 		$this->configTemplate = config('AppTemplate');
-		$this->configMenu = config('AppMenu');
+		//$this->configMenu = config('AppMenu');
 
 		// Define language
 		$this->data['locale'] = $request->getLocale();
@@ -124,6 +124,7 @@ class BaseController extends Controller
 
 		// Add breadcrumb
 		$this->breadcrumb = new Breadcrumb();
+		$this->breadcrumb->setTemplate($this->configTemplate->breadcrumbTemplate);
 		// Add default items
 		$this->breadcrumbItems['root'] = ['Dashboard' => '/'];
 	}
@@ -149,7 +150,7 @@ class BaseController extends Controller
 			$mergeRootControllerFunction = array_merge($this->breadcrumbItems['root'], $mergeControllerFunction);
 
 			// Add items
-			$this->breadcrumb->add_item($mergeRootControllerFunction);
+			$this->breadcrumb->addItems($mergeRootControllerFunction);
 
 			// Generate breadcrumb
 			return $this->breadcrumb->generate();

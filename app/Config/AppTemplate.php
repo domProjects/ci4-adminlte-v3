@@ -220,4 +220,17 @@ class AppTpl extends BaseConfig
 	 * @var bool
 	 */
 	public $breadcrumbHide = false;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Breadcrumb Template
+	 * --------------------------------------------------------------------------
+	 *
+	 * @var array
+	 */
+	public $breadcrumbTemplate = [
+		'breadcrumb_open' => 'breadcrumb float-sm-right',
+		'breadcrumb_item_open' => 'breadcrumb-item',
+		'breadcrumb_item_active' => 'breadcrumb-item active',
+	];
 }

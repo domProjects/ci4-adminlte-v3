@@ -55,7 +55,7 @@ class Breadcrumb
 	}
 
 
-	public function add_item($items)
+	public function addItems($items)
 	{
 		foreach ($items as $key => $value)
 		{
@@ -77,7 +77,7 @@ class Breadcrumb
 		$this->_compileTemplate();
 
 		// Build the breadcrumb
-		$out = $this->template['tag_open'] . $this->newline;
+		$out = '<ol class="' . $this->template['breadcrumb_open'] . '">' . $this->newline;
 
 		foreach ($this->item as $key => $value)
 		{
@@ -85,17 +85,19 @@ class Breadcrumb
 
 			if (end($keys) == $key)
 			{
-				$out .= $this->template['crumb_active'] . $value['title'] . $this->template['crumb_close'] . $this->newline;
+				$out .= '<li class="' . $this->template['breadcrumb_item_active'] . '">';
+				$out .= $value['title'];
+				$out .= '</li>' . $this->newline;
 			}
 			else
 			{
-				$out .= $this->template['crumb_open'];
+				$out .= '<li class="' . $this->template['breadcrumb_item_open'] . '">';
 				$out .= anchor($this->_formatUrl($value['link']), $value['title']);
-				$out .= $this->template['crumb_close'] . $this->newline;
+				$out .= '</li>' . $this->newline;
 			}
 		}
 
-		$out .= $this->template['tag_close'] . $this->newline;
+		$out .= '</ol>' . $this->newline;
 
 		return $out;
 	}
@@ -150,11 +152,9 @@ class Breadcrumb
 	protected function _defaultTemplate()
 	{
 		return [
-			'tag_open'     => '<ol class="breadcrumb float-sm-right">',
-			'tag_close'    => '</ol>',
-			'crumb_open'   => '<li class="breadcrumb-item">',
-			'crumb_active' => '<li class="breadcrumb-item active">',
-			'crumb_close'  => '</li>'
+			'breadcrumb_open'        => 'breadcrumb',
+			'breadcrumb_item_open'   => 'breadcrumb-item',
+			'breadcrumb_item_active' => 'breadcrumb-item active'
 		];
 	}
 }
