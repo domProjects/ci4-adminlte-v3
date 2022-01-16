@@ -11,6 +11,6 @@
 
 // Filters language settings
 return [
-    'noFilter'           => '{0} 过滤器必须定义匹配的别名。',
-    'incorrectInterface' => '{0} 必须实现 CodeIgniter\Filters\FilterInterface 接口。',
+    'noFilter'           => '过滤器 {0} 必须有一个匹配的别名定义。',
+    'incorrectInterface' => '{0} 必须实现 CodeIgniter\Filters\FilterInterface。',
 ];
